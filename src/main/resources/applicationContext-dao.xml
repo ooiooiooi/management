@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans">
+    <context:property-placeholder location="classpath:/properties/*.properties"/>
+    <!--配置数据库连接 -->
+
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property value="${jdbc.driver}" name="driverClassName"/>
+        <!-- url -->
+        <property value="${jdbc.url}" name="url"/>
+        <!-- 用户名 -->
+        <property value="${jdbc.username}" name="username"/>
+        <!-- 密码 -->
+        <property value="${jdbc.password}" name="password"/>
+    </bean>
+    <!-- 配置 Mybatis的工厂 -->
+
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置Mybatis的核心 配置文件所在位置 -->
+        <property value="classpath:SqlMapConfig.xml" name="configLocation"/>
+        <!-- 配置pojo别名 -->
+        <property value="com.xy.pojo" name="typeAliasesPackage"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property value="com.xy.mapper" name="basePackage"/>
+    </bean>
+</beans>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xy.mapper.UserMapper">
+<insert id="registerUser" parameterType="map">
+
+    insert into users(id,user,password,user_type,update_time,create_time) values (#{id},#{user},#{password},#{user_type},#{update_time},#{create_time})
+
+</insert>
+
+    <select id="findUser" parameterType="string" resultType="int">
+        select count(id) from users where user = #{1}
+    </select>
+
+    <select id="findPassword" resultType="string" parameterType="string">
+        select password from users where user =#{1}
+    </select>
+
+</mapper>
